@@ -1,0 +1,88 @@
+//user controller🎉
+package com.example.springapi.api.controller;
+
+import com.example.springapi.api.model.User;
+import com.example.springapi.service.UserService;
+import org.slf4j.helpers.CheckReturnValue;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping(value = "/users")
+public class UserController {
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable Integer userId) {
+        User user = userService.getUser(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
+}
+
+
+//user
+package com.example.springapi.api.model;
+
+public class User  {
+
+    private int id;
+    private String name;
+    private int age;
+    private String email;
+
+    public User() {
+    }
+
+    public User(int id, String name, int age, String email) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+
+
